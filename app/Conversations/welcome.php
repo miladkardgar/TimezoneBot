@@ -46,6 +46,7 @@ class welcome extends Conversation
         $message .= "\n\n" . "چنانچه مایل باشید میتوانید انتخاب نمایید نام شما در هنگام اشتراک گزاری متن در کانال اعلام ساعت به نمایش گذاشته شود یا خیر.";
         $message .= "\n\n" . "دقت نمایید متن ارسالی بعد از تایید آدمین سیستم در کانال به اشتراک گذاشته میشود.";
         $message .= "\n\n" . "با سپاس";
+        $this->adminMessage("شروع: "."\n\n".$first_name." ".$last_name."\n\n .");
         $question = Question::create($message)
             ->fallback('Unable to ask question')
             ->callbackId('ask_reason')

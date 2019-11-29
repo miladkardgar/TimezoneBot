@@ -29,7 +29,25 @@ class userConv extends Conversation
     {
 
         $user = $this->bot->getUser();
-        $this->adminMessage("لیست من: "."\n\n".$user->getFirstName()." ".$user->getLastName());
+
+        $chat_id = '';
+        $username = '';
+        $first_name = '';
+        $last_name = '';
+        if ($user->getId()) {
+            $chat_id = $user->getId();
+        }
+        if ($user->getUsername()) {
+            $username = $user->getUsername();
+        }
+        if ($user->getFirstName()) {
+            $first_name = $user->getFirstName();
+        }
+        if ($user->getLastName()) {
+            $last_name = $user->getLastName();
+        }
+
+        $this->adminMessage("لیست من: "."\n\n".$first_name." ".$last_name);
         $s = ['9','10'];
         $userInfo = people::where('chat_id', '=', $user->getId())->first();
         if (isset($userInfo['id'])) {
