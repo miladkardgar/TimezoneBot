@@ -65,9 +65,11 @@ class userConv extends Conversation
                         $show = "عدم نمایش";
                     }
                     $message = $item['text'] . "\n\n ------------------ \n";
-                    $message .= "\n" . "زمان ارسال: " . jdate("Y-m-d H:i:s", strtotime($item['created_at']), '', '', 'en');
+                    $message .= "\n" . "زمان ارسال: " . jdate("H:i:s | Y/m/d", strtotime($item['created_at']), '', '', 'en');
                     $message .= "\n" . "وضعیت: " . $status;
-                    $message .= "\n" . "نمایش نام: " . $show . "\n .";
+                    $message .= "\n" . "نمایش نام: " . $show;
+                    $message .= "\n" . "تعداد نمایش: " . $item['count_show'];
+                    $message .= "\n" . "اخرین ارسال: " . jdate("H:i:s | Y/m/d",strtotime($item['updated_at']),'','','en') . "\n .";
                     $question = Question::create($message)
                         ->callbackId('check_message_'.$item['id'])
                         ->addButtons([

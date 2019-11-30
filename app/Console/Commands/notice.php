@@ -136,7 +136,7 @@ class notice extends Command
 
             $created = new Carbon($getUserNo['updated_at']);
             $now = Carbon::now();
-            if ($created->diff($now)->h > 4) {
+            if ($created->diff($now)->h > 8) {
                 $finalText .= "\n\n" . $getUserNo['text'];
                 if ($getUserNo['show'] == 1) {
                     $finalText .= "\n\n" . $getUserNo['userInfo']['username'];
@@ -147,6 +147,7 @@ class notice extends Command
                     ]
                 );
                 $getUserNo->save();
+                $botman->say($finalText, $getUserNo['userInfo']['chat_id'], TelegramDriver::class, ['parse_mode' => 'HTML']);
             } else {
                 $getNo->update(
                     [
@@ -156,9 +157,8 @@ class notice extends Command
                 $getNo->save();
                 $finalText .= "\n\n" . $getNo['text'];
             }
-            $finalText .= "\n .";
+            $finalText .= "\n ";
         }
         $botman->say($finalText, "-1001332329957", TelegramDriver::class, ['parse_mode' => 'HTML']);
-        $botman->say($finalText, $adminID, TelegramDriver::class, ['parse_mode' => 'HTML']);
     }
 }

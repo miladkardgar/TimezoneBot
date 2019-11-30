@@ -44,7 +44,7 @@ class events extends Command
         $curl = curl_init();
         $dPe = jdate("d", time(), '', '', 'en');
         $dEn = date("d");
-        $mPe = jdate("m", '', '', '', 'en');
+        $mPe = jdate("m", time(), '', '', 'en');
         $mEn = date("m");
         curl_setopt_array($curl, array(
             CURLOPT_URL => "https://farsicalendar.com/api/sh,wc/$dPe,$dEn/$mPe,$mEn",
@@ -70,6 +70,7 @@ class events extends Command
         if ($err) {
             echo "cURL Error #:" . $err;
         } else {
+
             $res = json_decode($response, true);
             foreach ($res['values'] as $value) {
                 $adminText .= $value['occasion'] . "\n";
