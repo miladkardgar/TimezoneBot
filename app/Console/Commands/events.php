@@ -65,23 +65,23 @@ class events extends Command
         $botman = app('botman');
         $adminID = env('ADMIN_ID');
         $adminText = 'لیست مناسبت های امروز: ' . "\n";
+        $adminText .= jdate("Y",time(),'','','en')."/" . $mPe . "/" . $dPe . "\n\n";
         curl_close($curl);
 
+        $i=1;
         if ($err) {
             echo "cURL Error #:" . $err;
         } else {
-
             $res = json_decode($response, true);
             foreach ($res['values'] as $value) {
-                $adminText .= $value['occasion'] . "\n";
-                $botman->say($value['occasion'], $adminID, TelegramDriver::class, ['parse_mode' => 'HTML']);
+
                 $check = event::where('e_id', $value['id'])->first();
                 if (!$check['id']) {
-                    notice::create(
+                    event::create(
                         [
                             "e_id" => $value['id'],
-                            "year" => $value['year'],
-                            "dayoff" => $value['dayOff'],
+                            "year" => $value['year'] || 0,
+                            "dayoff" => $value['dayoff'],
                             "type" => $value['type'],
                             "category" => $value['category'],
                             "occasion" => $value['occasion'],
@@ -93,8 +93,9 @@ class events extends Command
                         ]
                     );
                 }
+                $adminText .= $i."- ".$value['occasion'] . "\n";
+                $i++;
             }
-            $adminText .= "\n" . $dPe . "-" . $mPe . "\n .";
             $botman->say($adminText, $adminID, TelegramDriver::class, ['parse_mode' => 'HTML']);
         }
     }

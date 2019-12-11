@@ -143,7 +143,7 @@ class welcome extends Conversation
                     $notice->show = 0;
                 }
                 $notice->save();
-                $this->adminMessage("متن جدید");
+                $this->adminMessage("متن جدید"."\n"."/p_list");
                 $this->say("متن ارسالی شما با شماره پیگیری $notice->id به موفقیت در سیستم ثبت گردید. بعد از بررسی، نتیجه به اطلاع شما خواهد رسید... \n\n با سپاس" . "\n\n .");
             }
         });
